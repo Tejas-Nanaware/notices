@@ -5,11 +5,11 @@ try{
     // json response array
     $response = array("error" => FALSE);
      
-    if (isset($_POST['email']) && isset($_POST['password'])) {
+    if (isset($_GET['email']) && isset($_GET['password'])) {
      
-        // receiving the post params
-        $email = $_POST['email'];
-        $password = $_POST['password'];
+        // receiving the GET params
+        $email = $_GET['email'];
+        $password = $_GET['password'];
      
         // get the user by email and password
         $user = $db->getUserByEmailAndPassword($email, $password);
@@ -20,7 +20,7 @@ try{
                 $response["uid"] = $user["uniqueid"];
                 $response["user"]["name"] = $user["name"];
                 $response["user"]["year"] = $user["year"];
-                $response["user"]["class"] = $user["class"];
+                $response["user"]["branch"] = $user["branch"];
                 $response["user"]["rollno"] = $user["rollno"];
                 $response["user"]["email"] = $user["email"];
                 $response["user"]["created_at"] = $user["createdat"];
@@ -33,7 +33,7 @@ try{
             echo json_encode($response);
         }
     } else {
-        // required post params is missing
+        // required GET params is missing
         $response["error"] = TRUE;
         $response["error_msg"] = "Required parameters email or password is missing!";
         echo json_encode($response);

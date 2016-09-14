@@ -35,7 +35,8 @@ class DB_Functions {
        $stmt = $this->conn->prepare("INSERT INTO studentdata(uniqueid, name, year, branch, rollno,  email, password, salt, createdat) VALUES(?, ?, ?, ?, ?, ?, ?, ?, NOW())");
         $stmt->bind_param("ssssssss", $uuid, $name, $year, $branch, $rollno, $email, $encrypted_password, $salt);
         $result = $stmt->execute();
-        $stmt->close();
+        echo $result;
+        //$stmt->close();
  
         // check for successful store
         if ($result) {
@@ -44,7 +45,8 @@ class DB_Functions {
             $stmt->bind_param("s", $email);
             $stmt->execute();
             $user = $stmt->get_result()->fetch_assoc();
-            $stmt->close();
+            return true;
+            //$stmt->close();
         }
          else {
             return false;
@@ -63,7 +65,7 @@ class DB_Functions {
  
         if ($stmt->execute()) {
             $user = $stmt->get_result()->fetch_assoc();
-            $stmt->close();
+            //$stmt->close();
  
             // verifying user password
             $salt = $user['salt'];
@@ -97,7 +99,7 @@ class DB_Functions {
             return true;
         } else {
             // user not existed
-            $stmt->close();
+            //$stmt->close();
             return false;
         }
     }
